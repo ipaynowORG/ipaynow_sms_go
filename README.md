@@ -164,13 +164,13 @@
 - 查询短信发送结果(状态报告)
 
 
-	/**
-	 * 查询短信发送结果(状态报告)
-	 * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
-	 * @param mobile 手机号
-	 * @return 发送成功返回true , 失败false
-	*/
-	func Query(app *App,nowPayOrderNo string,mobile string) bool
+		/**
+		 * 查询短信发送结果(状态报告)
+		 * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
+		 * @param mobile 手机号
+		 * @return 发送成功返回true , 失败false
+		 */
+		func Query(app *App,nowPayOrderNo string,mobile string) bool
 
 <h4 id='2.4'> 2.4 退款API </h4>
 
