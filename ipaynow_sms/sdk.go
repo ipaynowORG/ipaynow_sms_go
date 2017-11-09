@@ -131,6 +131,8 @@ func Query(app *App,nowPayOrderNo string,mobile string) boolean{
 	var result = post("https://sms.ipaynow.cn", content)
 	
 	fmt.Println(result)
+	
+	return true
 }
 
 
