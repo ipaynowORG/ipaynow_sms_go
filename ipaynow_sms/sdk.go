@@ -77,7 +77,7 @@ func send(app *App,types string,mobile string, content string, mhtOrderNo string
 	var message1 = "appId=" + app.AppId
 	b64 := base64.StdEncoding.EncodeToString([]byte(message1))
 	message1 = string(b64)
-	var des, err = TripleEcbDesEncrypt([]byte(postFormLinkReport), []byte(app.DesKey))
+	var des, err = tripleEcbDesEncrypt([]byte(postFormLinkReport), []byte(app.DesKey))
 	if err != nil {
 		fmt.Println(des)
 		fmt.Println(err)
@@ -135,13 +135,13 @@ func getRandomString(l int) string {
 }
 
 //ECB PKCS5Padding
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+func pKCS5Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
-func NoPadding(origData []byte) []byte {
+func noPadding(origData []byte) []byte {
 	length := len(origData)
 
 	if length%8 != 0 {
@@ -158,7 +158,7 @@ func NoPadding(origData []byte) []byte {
 }
 
 //ECB PKCS5Unpadding
-func PKCS5Unpadding(origData []byte) []byte {
+func pKCS5Unpadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
@@ -213,7 +213,7 @@ func decrypt(crypted, key []byte) ([]byte, error) {
 }
 
 //[golang ECB 3DES Encrypt]
-func TripleEcbDesEncrypt(origData, key []byte) ([]byte, error) {
+func tripleEcbDesEncrypt(origData, key []byte) ([]byte, error) {
 	tkey := make([]byte, 24, 24)
 	copy(tkey, key)
 	k1 := tkey[:8]
@@ -225,7 +225,7 @@ func TripleEcbDesEncrypt(origData, key []byte) ([]byte, error) {
 	//		return nil, err
 	//	}
 	//	bs := block.BlockSize()
-	origData = NoPadding(origData)
+	origData = noPadding(origData)
 
 	buf1, err := encrypt(origData, k1)
 	if err != nil {
@@ -243,7 +243,7 @@ func TripleEcbDesEncrypt(origData, key []byte) ([]byte, error) {
 }
 
 //[golang ECB 3DES Decrypt]
-func TripleEcbDesDecrypt(crypted, key []byte) ([]byte, error) {
+func tripleEcbDesDecrypt(crypted, key []byte) ([]byte, error) {
 	tkey := make([]byte, 24, 24)
 	copy(tkey, key)
 	k1 := tkey[:8]
@@ -261,6 +261,6 @@ func TripleEcbDesDecrypt(crypted, key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	out = PKCS5Unpadding(out)
+	out = pKCS5Unpadding(out)
 	return out, nil
 }
