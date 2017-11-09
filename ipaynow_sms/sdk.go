@@ -99,12 +99,12 @@ func send(app *App,types string,mobile string, content string, mhtOrderNo string
 	return result
 }
 
-	**
-     * 查询短信发送结果(状态报告)
-     * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
-     * @param mobile 手机号
-     * @return 发送成功返回true , 失败false
-     */
+/**
+* 查询短信发送结果(状态报告)
+* @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
+* @param mobile 手机号
+* @return 发送成功返回true , 失败false
+*/
 func Query(app *App,nowPayOrderNo string,mobile string) boolean{
 	var postMap = make(map[string]string)
 	
