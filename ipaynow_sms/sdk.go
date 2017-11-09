@@ -33,7 +33,7 @@ type App struct {
  * @param notifyUrl 后台通知地址
  */
 func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
-	return send(app,"S01",mobile,content,mthOrderNo,notifyUrl)
+	return send(app,"S01",mobile,content,mhtOrderNo,notifyUrl)
 }
 /**
  * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
@@ -45,7 +45,7 @@ func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyU
  * @param notifyUrl 后台通知地址
  */
 func Send_yx(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
-	return send(app,"YX_01",mobile,content,mthOrderNo,notifyUrl)
+	return send(app,"YX_01",mobile,content,mhtOrderNo,notifyUrl)
 }
 
 func send(app *App,types string,mobile string, content string, mhtOrderNo string, notifyUrl string) string {
