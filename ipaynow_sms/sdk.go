@@ -30,11 +30,11 @@ func Send_yx(app *App, mobile string, content string, mhtOrderNo string, notifyU
 	return send(app,"YX_01",content,mthOrderNo,notifyUrl)
 }
 
-func send(app *App,type string,mobile string, content string, mhtOrderNo string, notifyUrl string) string {
+func send(app *App,types string,mobile string, content string, mhtOrderNo string, notifyUrl string) string {
 
 	var postMap = make(map[string]string)
 
-	postMap["funcode"] = type
+	postMap["funcode"] = types
 	postMap["appId"] = app.AppId
 	if mhtOrderNo != "" {
 		postMap["mhtOrderNo"] = mhtOrderNo
@@ -72,7 +72,7 @@ func send(app *App,type string,mobile string, content string, mhtOrderNo string,
 
 	u := url.Values{}
 	u.Set("message", message)
-	var result = post("https://sms.ipaynow.cn", "funcode="+type+"&"+u.Encode())
+	var result = post("https://sms.ipaynow.cn", "funcode="+types+"&"+u.Encode())
 
 	//	decodeBytes, err := base64.StdEncoding.DecodeString("bWVzc2FnZVVSTOino+eggeWksei0pQ==")
 	//	fmt.Println(string(decodeBytes))
