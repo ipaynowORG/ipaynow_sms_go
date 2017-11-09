@@ -27,9 +27,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.3 查询短信发送结果(状态报告)](#2.3)
 
-[3. 配置文件](#3)
-
-[4. DEMO](#4)
+[3. 完整DEMO](#3)
 
 
 <h2 id='1'> 1. 概述 </h2>
@@ -85,17 +83,16 @@
 <h4 id='2.2'>2.2 接受通知(状态报告)</h4>
 
 
-由现在支付方发起,通知方式采用httppost方式通知,接受demo如下
-
-        //获取通知数据需要从body中流式读取
-        BufferedReader reader = req.getReader();
-        StringBuilder reportBuilder = new StringBuilder();
-        String tempStr = "";
-        while((tempStr = reader.readLine()) != null){
-               reportBuilder.append(tempStr);
+		func handler(w http.ResponseWriter, r *http.Request) {
+			r.ParseForm()
+			if r.Method == "POST" {
+            result, _:= ioutil.ReadAll(r.Body)
+			r.Body.Close()
+			//报文数据字符串
+			fmt.Printf("%s\n", result)
         }
-        //报文数据字符串
-        String reportContent = reportBuilder.toString();
+		...
+		}
 
 
 字段含义如下:
