@@ -105,7 +105,7 @@ func send(app *App,types string,mobile string, content string, mhtOrderNo string
 * @param mobile 手机号
 * @return 发送成功返回true , 失败false
 */
-func Query(app *App,nowPayOrderNo string,mobile string) boolean{
+func Query(app *App,nowPayOrderNo string,mobile string) bool{
 	var postMap = make(map[string]string)
 	
 	postMap["funcode"] = "SMS_QUERY"
