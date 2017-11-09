@@ -25,8 +25,8 @@ type App struct {
 
 /**
  * 发送行业短信(需要在运营后台-短信服务管理 中进行配置)
- * @param app appId(应用ID)和appKey ,
- * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
+ * @param app appId(应用ID)和appKey ,desKey
+ * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey 。运营后台可配置DesKey
  * @param mobile 发送手机号
  * @param content 发送内容
  * @param mhtOrderNo 商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
@@ -37,8 +37,8 @@ func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyU
 }
 /**
  * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
- * @param app appId(应用ID)和appKey ,
- * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
+ * @param app appId(应用ID)和appKey ,desKey
+ * 登录商户后台 : https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey 。运营后台可配置DesKey
  * @param mobile 发送手机号
  * @param content 发送内容
  * @param mhtOrderNo 商户订单号,可为空(自动生成)。商户订单号和状态报告通知中的相关字段对应
