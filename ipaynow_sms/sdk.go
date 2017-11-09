@@ -1,4 +1,4 @@
-package main
+package sms
 
 import (
 	"bytes"
@@ -22,20 +22,19 @@ type App struct {
 	DesKey string
 }
 
-func main() {
-	app := App{
-		AppId:  "150753086263684",
-		AppKey: "zHGKLmQaU9PLMEGObyubsV5uhDAeYVqQ",
-		DesKey: "a8ifp3YwBSjipz3BisGA8akF",
-	}
-	send(&app, "13401190417", "123ggg啊1", "", "https://op-tester.ipaynow.cn/paytest/notify")
+func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
+	return send(app,"S01",content,mthOrderNo,notifyUrl)
 }
 
-func send(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
+func Send_yx(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
+	return send(app,"YX_01",content,mthOrderNo,notifyUrl)
+}
+
+func send(app *App,type string,mobile string, content string, mhtOrderNo string, notifyUrl string) string {
 
 	var postMap = make(map[string]string)
 
-	postMap["funcode"] = "S01"
+	postMap["funcode"] = type
 	postMap["appId"] = app.AppId
 	if mhtOrderNo != "" {
 		postMap["mhtOrderNo"] = mhtOrderNo
@@ -73,7 +72,7 @@ func send(app *App, mobile string, content string, mhtOrderNo string, notifyUrl 
 
 	u := url.Values{}
 	u.Set("message", message)
-	var result = post("https://sms.ipaynow.cn", "funcode=S01&"+u.Encode())
+	var result = post("https://sms.ipaynow.cn", "funcode="+type+"&"+u.Encode())
 
 	//	decodeBytes, err := base64.StdEncoding.DecodeString("bWVzc2FnZVVSTOino+eggeWksei0pQ==")
 	//	fmt.Println(string(decodeBytes))
