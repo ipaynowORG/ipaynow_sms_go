@@ -172,31 +172,22 @@
 <h2 id='3'> 3. 完整DEMO </h2>
 
 		package main
-		
+
 		import (
-			"fmt"
-			//使用go get github.com/ipaynowORG/ipaynow_pay_go/ipaynow_pay 命令clone 并 install ipaynow_pay模块
-			git "github.com/ipaynowORG/ipaynow_pay_go/ipaynow_pay"
+			git "github.com/ipaynowORG/ipaynow_sms_go/ipaynow_sms"
 		)
-		
+
 		func main() {
-		
+
 			app := git.App{
-				AppId:  "xxxxxxxx",
-				AppKey: "xxxxxxxxxxxxxxxxxxx",
+				AppId:  "xxxxxx",
+				AppKey: "xxxxxxxxxxxxxxxx",
+				DesKey: "xxxxxxxxxxxx",
 			}
-			orderDetail := git.OrderDetail{
-				MhtOrderName:   "测试商品",
-				MhtOrderDetail: "的描述",
-				MhtOrderAmt:    1,
-				MhtGoodsTag:    "",
-			}
-		
-			//主扫测试
-			content := git.Wx_scan_05(&app, &orderDetail, "", "xxxxxxxxxxxx", "xxxxxxxxxxxxxx", "")
-			fmt.Println(content)
-		
-			//商户字符订单查询
-			//	resp := git.QueryOrderScan05("8AlYzDC4b5r4H", &app)
-			//	fmt.Println(resp)
+			//发送营销短信
+			//	git.Send_yx(&app, "xxxxxxxx", "测试内容", "", "xxxxxxxxxxx")
+	
+			//查询发送结果(状态报告)
+			git.Query(&app, "xxxxxxxxxxxxx", "xxxxxxxxx")
 		}
+
