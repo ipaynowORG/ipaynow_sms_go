@@ -90,7 +90,7 @@
 			r.Body.Close()
 			//报文数据字符串
 			fmt.Printf("%s\n", result)
-        }
+			}
 		...
 		}
 
@@ -168,60 +168,6 @@
 		 * @return 发送成功返回true , 失败false
 		 */
 		func Query(app *App,nowPayOrderNo string,mobile string) bool
-
-<h4 id='2.4'> 2.4 退款API </h4>
-
-<h5 id='2.4.1'></h4>
-
-- 退款
-
-        /**
-         * 退款
-         * @param appId 商户的AppId,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param appKey 商户的AppKey,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param mhtOrderNo    商户订单号
-         * @param amount    退款金额
-         * @param reason    退款原因
-         */
-        func refundOrder(app *App, mhtOrderNo string, amount int, reason string) string
-
-<h5 id='2.4.2'></h4>
-
-- 退款查询
-
-        /**
-         * 退款查询
-         * @param appId 商户的AppId,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param appKey 商户的AppKey,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param mhtRefundNo   商户退款单号
-         */
-        func refundQuery(app *App, mhtRefundNo string) string
-
-<h5 id='2.4.3'></h4>
-
-- 撤销
-
-        /**
-         * 撤销(只能撤销当天的交易,且无论成功失败(逻辑包含退款))
-         * @param appId 商户的AppId,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param appKey 商户的AppKey,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param mhtOrderNo    商户订单号
-         * @param reason    退款原因
-         */
-        func backOrder(app *App, mhtOrderNo string, reason string) string
-
-<h5 id='2.4.4'></h4>
-
-- 撤销查询
-
-        /**
-         * 撤销查询
-         * @param appId 商户的AppId,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param appKey 商户的AppKey,https://mch.ipaynow.cn ->商户中心->应用信息可以新增应用或查看appKey
-         * @param mhtRefundNo   商户退款单号
-         */
-        func backQuery(app *App, mhtRefundNo string) string 
-
 
 <h2 id='3'> 3. 完整DEMO </h2>
 
