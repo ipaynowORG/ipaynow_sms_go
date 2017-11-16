@@ -20,6 +20,7 @@ type App struct {
 	AppId  string
 	AppKey string
 	DesKey string
+	IsDev  bool
 }
 
 /**
@@ -90,8 +91,15 @@ func send(app *App, types string, mobile string, content string, mhtOrderNo stri
 
 	u := url.Values{}
 	u.Set("message", message)
-	var result = post("https://sms.ipaynow.cn", "funcode="+types+"&"+u.Encode())
-
+	
+	var posturl = "" 
+	if app.IsDev { 
+		posturl = "https://dby.ipaynow.cn/sms" 
+	} else { 
+		posturl = "https://sms.ipaynow.cn" 
+	} 
+	var result = post(posturl, "funcode="+funcode+"&"+u.Encode()) 
+	
 	//	decodeBytes, err := base64.StdEncoding.DecodeString("bWVzc2FnZVVSTOino+eggeWksei0pQ==")
 	//	fmt.Println(string(decodeBytes))
 
@@ -164,7 +172,13 @@ func Query(app *App, nowPayOrderNo string, mobile string) bool {
 
 	var content = postFormLinkReport + "&mchSign=" + mchSign
 
-	var result = post("https://sms.ipaynow.cn", content)
+	var posturl = "" 
+	if app.IsDev { 
+		posturl = "https://dby.ipaynow.cn/sms" 
+	} else { 
+		posturl = "https://sms.ipaynow.cn" 
+	} 
+	var result = post(posturl, content)
 
 	fmt.Println(result)
 
