@@ -22,7 +22,6 @@ type App struct {
 	DesKey string
 }
 
-
 /**
  * 发送行业短信(需要在运营后台-短信服务管理 中进行配置)
  * @param app appId(应用ID)和appKey ,desKey
@@ -33,8 +32,9 @@ type App struct {
  * @param notifyUrl 后台通知地址
  */
 func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
-	return send(app,"S01",mobile,content,mhtOrderNo,notifyUrl)
+	return send(app, "S01", mobile, content, mhtOrderNo, notifyUrl)
 }
+
 /**
  * 发送营销短信(需要在运营后台-短信服务管理 中进行配置)
  * @param app appId(应用ID)和appKey ,desKey
@@ -45,10 +45,10 @@ func Send_hy(app *App, mobile string, content string, mhtOrderNo string, notifyU
  * @param notifyUrl 后台通知地址
  */
 func Send_yx(app *App, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
-	return send(app,"YX_01",mobile,content,mhtOrderNo,notifyUrl)
+	return send(app, "YX_01", mobile, content, mhtOrderNo, notifyUrl)
 }
 
-func send(app *App,types string,mobile string, content string, mhtOrderNo string, notifyUrl string) string {
+func send(app *App, types string, mobile string, content string, mhtOrderNo string, notifyUrl string) string {
 
 	var postMap = make(map[string]string)
 
@@ -94,9 +94,45 @@ func send(app *App,types string,mobile string, content string, mhtOrderNo string
 
 	//	decodeBytes, err := base64.StdEncoding.DecodeString("bWVzc2FnZVVSTOino+eggeWksei0pQ==")
 	//	fmt.Println(string(decodeBytes))
-	fmt.Println(result)
 
-	return result
+	//6.基本验证
+	if len(strings.Split(result, "|")) == 2 {
+		decodeBytes, err := base64.StdEncoding.DecodeString(strings.Split(result, "|")[1])
+		if err == nil {
+			fmt.Println(string(decodeBytes))
+		} else {
+			fmt.Println(err)
+		}
+	}
+
+	//7.解析
+	//	return1 := strings.Split(result, "|")[0]
+	return2 := strings.Split(result, "|")[1]
+	return3 := strings.Split(result, "|")[2]
+
+	return2b64, err2 := base64.StdEncoding.DecodeString(return2)
+	if err2 == nil {
+		var originalMsg, err1 = tripleEcbDesDecrypt([]byte(return2b64), []byte(app.DesKey))
+		if err1 == nil {
+			//验签
+			var mySign = fmt.Sprintf("%x", md5.Sum([]byte(string(originalMsg)+"&"+app.AppKey)))
+			var originalSign, err4 = base64.StdEncoding.DecodeString(return3)
+			if err4 == nil {
+				//验签失败?
+				if string(originalSign) != mySign {
+					return string(originalMsg)
+				}
+				return string(originalMsg)
+			} else {
+				fmt.Println(err4)
+			}
+		} else {
+			fmt.Println(err1)
+		}
+	} else {
+		fmt.Println(err2)
+	}
+	return ""
 }
 
 /**
@@ -104,15 +140,15 @@ func send(app *App,types string,mobile string, content string, mhtOrderNo string
 * @param nowPayOrderNo 现在支付订单号(send_yx和send_hy方法的返回值)
 * @param mobile 手机号
 * @return 发送成功返回true , 失败false
-*/
-func Query(app *App,nowPayOrderNo string,mobile string) bool{
+ */
+func Query(app *App, nowPayOrderNo string, mobile string) bool {
 	var postMap = make(map[string]string)
-	
+
 	postMap["funcode"] = "SMS_QUERY"
 	postMap["appId"] = app.AppId
 	postMap["nowPayOrderNo"] = nowPayOrderNo
 	postMap["mobile"] = mobile
-	
+
 	var keys []string
 	for k := range postMap {
 		keys = append(keys, k)
@@ -123,19 +159,17 @@ func Query(app *App,nowPayOrderNo string,mobile string) bool{
 		postFormLinkReport += k + "=" + postMap[k] + "&"
 	}
 	postFormLinkReport = postFormLinkReport[0 : len(postFormLinkReport)-1]
-	
+
 	var mchSign = fmt.Sprintf("%x", md5.Sum([]byte(postFormLinkReport+"&"+app.AppKey)))
-	
-	var content = postFormLinkReport+"&mchSign="+mchSign;
-	
+
+	var content = postFormLinkReport + "&mchSign=" + mchSign
+
 	var result = post("https://sms.ipaynow.cn", content)
-	
+
 	fmt.Println(result)
-	
+
 	return true
 }
-
-
 
 func urlEncode(content string) string {
 	l, e := url.Parse("?" + content)
