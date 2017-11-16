@@ -6,6 +6,7 @@
 
 - 1.0.0 : 初稿
 
+- 1.0.1 : 允许客户指定调用生产或测试环境
 
 ## 目录 ##
 
@@ -183,6 +184,7 @@
 				AppId:  "xxxxxx",
 				AppKey: "xxxxxxxxxxxxxxxx",
 				DesKey: "xxxxxxxxxxxx",
+				IsDev: false,//true标识调用生产环境,false为调用测试环境
 			}
 			//发送营销短信
 			//	git.Send_yx(&app, "xxxxxxxx", "测试内容", "", "xxxxxxxxxxx")
