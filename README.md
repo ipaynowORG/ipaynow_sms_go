@@ -184,7 +184,7 @@
 				AppId:  "xxxxxx",
 				AppKey: "xxxxxxxxxxxxxxxx",
 				DesKey: "xxxxxxxxxxxx",
-				IsDev: false,//true标识调用生产环境,false为调用测试环境
+				IsDev: false,//false标识调用生产环境,true为调用测试环境
 			}
 			//发送营销短信
 			//	git.Send_yx(&app, "xxxxxxxx", "测试内容", "", "xxxxxxxxxxx")
